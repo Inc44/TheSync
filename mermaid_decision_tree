@@ -1,0 +1,35 @@
+graph TD
+    Start["Start Sync Entry"]
+    SizeCheck["Size Check"]
+    SizeMismatch["Sizes Mismatch?"]
+    DecisionMaker["Decision Maker"]
+    AutoSync["Auto Sync"]
+    UserPrompt["User Prompt"]
+    UserDecision["User Decision"]
+    CopyFile["Copy File"]
+    DateCheck["Date Check"]
+    DateMismatch["Dates Mismatch?"]
+    UpdateSourceDate["Update Source Date"]
+    UpdateDestinationDate["Update Destination Date"]
+    FixEnabled["Fix enabled?"]
+    FixSource["Fix source?"]
+    ApplyFix["Apply fix"]
+    End["End Sync Entry"]
+    Start --> SizeCheck --> SizeMismatch
+    SizeMismatch -- "Yes" --> DecisionMaker
+    DecisionMaker -- "Auto" --> AutoSync --> CopyFile
+    DecisionMaker -- "User" --> UserPrompt --> UserDecision
+    UserDecision -- "Yes" --> CopyFile
+    UserDecision -- "No" --> DateCheck
+    SizeMismatch -- "No" --> DateCheck
+    DateCheck --> FixEnabled
+    FixEnabled -- "No" --> End
+    FixEnabled -- "Yes" --> FixSource
+    FixSource -- "Destination" --> UpdateSourceDate
+    FixSource -- "Source" --> UpdateDestinationDate
+    UpdateSourceDate --> DateMismatch
+    UpdateDestinationDate --> DateMismatch
+    DateMismatch -- "Yes" --> ApplyFix
+    ApplyFix --> End
+    DateMismatch -- "No" --> End
+    CopyFile --> DateCheck

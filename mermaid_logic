@@ -1,0 +1,16 @@
+graph TD
+    ParseArgs["Parse Arguments"]
+    InitTSV["Initialize TSV File"]
+    WalkDir["Walk Source Directory"]
+    FillTSV["Fill TSV with File Data"]
+    Sync["Synchronize Files"]
+    Verify["Verification Steps"]
+    HashCheck["Hash Verification"]
+    Report["Generate Sync Report"]
+    ParseArgs --> InitTSV
+    InitTSV --> WalkDir
+    WalkDir --> FillTSV
+    FillTSV --> Sync
+    Sync --> Verify
+    Verify --> HashCheck
+    HashCheck --> Report
